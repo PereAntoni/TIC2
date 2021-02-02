@@ -1,0 +1,76 @@
+@startuml
+class LlistaObjectes{
+    Gestió de llista d'Objectes que participen
+    dins l'App.
+    ===========
+    -llista[]: llista d'objectes.
+    +nouObjecte(0bject): insereix l'objecte a la llista.
+    +llistaObjectes(): mostra info de tots els objectes per consola.
+    +fesMetode(metode): Executa el mètode a tots els objectes de la llista.
+}
+class GuiApp{
+    GESTOR DE APLICACIÓ VISUAL 
+    SOBRE SVG 
+    =======
+    +constructor(id: htmlDOM)
+    -gui: SVG;
+    -llista: LlistaObjectes;
+    -w:int
+    -h:int
+    -calculateScale()
+    +afegirObjecte(o)
+    +maxW()
+    +maxH()
+}
+class Animal{
+    +constructor(SVG)
+        -group : groupSVG
+        -seleccionat: boolean
+        -draw: SVG
+    ...getters...
+    +getPosicio() return Punt
+    +escala(int)
+    +mou(x,y)
+    +punt() : Punt
+}
+class Mosca{
+    +giraX: boolean
+    +giraY: boolean
+    +constructor(SVG)    
+    +anima(velocitat: int)
+
+}
+class Granot{
+    +constructor(SVG)
+        +giraX: boolean
+        +giraY: boolean
+    +mouNinetaO(objecte)//segueix un objecte
+    +mouNineta(p)//segueix un punt
+}
+class Ull{
+    +constructor(diametre: int, SVG)
+    - punt : Punt
+    - ull : SVG
+    - nineta: SVG
+    - group : GroupSVG
+}
+class Punt{
+    +constructor(x,y)
+    +x: integer
+    +y: integer
+    x(): int
+    y(): int
+}
+
+class GroupSVG{
+    FRAMEWORK PER SVG 
+    ===================
+    [[https://svgjs.com/docs/3.0/]]
+}
+
+Animal <|-- Granot
+Animal <|-- Mosca
+Animal *-- Ull : té dos
+LlistaObjectes o-- Animal : llista
+LlistaObjectes *-- GuiApp : té un
+@enduml
