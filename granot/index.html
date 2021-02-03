@@ -4,7 +4,6 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script></head>
 <body>
-<button onclick="main()">boto inici</button>
 
 <div class="row">
   <div class="col-sm-3" style="background-color:lavenderblush;" id="info0"></div>
@@ -15,7 +14,10 @@
 <div id="escenari"></div>
 </body>
 <script>
-    
+window.onload=function(){
+  //document.getElementById("linkid").click();
+  main();
+};
 class GuiApp{
   constructor(id){
     this.gui = SVG().addTo(id);
@@ -219,6 +221,42 @@ class Animal{
   punt(){
     return new Punt(this.group.x(),this.group.y());
   }
+  anima(v){
+      //controlam l'animació del grup 
+      let info="La mosca:" + v  + "<br>";
+      //this.gira ens indica la direcció
+      //miram si és a fora
+      
+      if (this.giraX===undefined){this.giraX=false;}
+      info = info + this.giraX + "<br>";
+      
+      const dreta = this.group.bbox().x2;
+      if(!this.giraX){
+        info=info+"faig v";
+        this.group.dmove(v,0);
+        if(dreta>this.draw.maxW()){this.giraX=true;}  
+      }
+      else{
+        info=info+"faig -v";
+        this.group.dmove(-v,0);
+        if((this.group.x()-v)<0){this.giraX=false;}  
+      }
+
+
+      /*if((dreta>this.draw.maxW())||(this.group.bbox().x-v<0))
+                  {this.gira=!this.gira;
+                  info = info +" ha girat" + this.gira;}
+            else  {info = info +" no ha girat" + this.gira ;}
+
+      if(!this.gira){this.group.animate().dmove(v,0);}
+      else{this.group.animate().dmove(-v,0);}*/
+
+      info= info + "<br>x: " + this.group.bbox().x + ", x2:" + this.group.bbox().x2;
+      info = info + "<br>y: " + this.group.bbox().y + ", y2:" + this.group.bbox().y2;
+      document.getElementById("info").innerHTML= info;
+      
+      
+    }
 }
 
 class Mosca extends Animal{
@@ -262,42 +300,7 @@ class Mosca extends Animal{
         }
         
     }
-    anima(v){
-      //controlam l'animació del grup 
-      let info="La mosca:" + v  + "<br>";
-      //this.gira ens indica la direcció
-      //miram si és a fora
-      
-      if (this.giraX===undefined){this.giraX=false;}
-      info = info + this.giraX + "<br>";
-      
-      const dreta = this.group.bbox().x2;
-      if(!this.giraX){
-        info=info+"faig v";
-        this.group.dmove(v,0);
-        if(dreta>this.draw.maxW()){this.giraX=true;}  
-      }
-      else{
-        info=info+"faig -v";
-        this.group.dmove(-v,0);
-        if((this.group.x()-v)<0){this.giraX=false;}  
-      }
-
-
-      /*if((dreta>this.draw.maxW())||(this.group.bbox().x-v<0))
-                  {this.gira=!this.gira;
-                  info = info +" ha girat" + this.gira;}
-            else  {info = info +" no ha girat" + this.gira ;}
-
-      if(!this.gira){this.group.animate().dmove(v,0);}
-      else{this.group.animate().dmove(-v,0);}*/
-
-      info= info + "<br>x: " + this.group.bbox().x + ", x2:" + this.group.bbox().x2;
-      info = info + "<br>y: " + this.group.bbox().y + ", y2:" + this.group.bbox().y2;
-      document.getElementById("info").innerHTML= info;
-      
-      
-    }
+    
     movimentMosca(on){
 		//el moviment de la mosca 
 		
@@ -370,12 +373,12 @@ function escriu(lloc,texte){
 }
 
 
-let escenari  = new GuiApp("#escenari");
+
+function main(){
+   let escenari  = new GuiApp("#escenari");
 let p,p1;
 let granot;
-let mosca;
-function main(){
-    
+let mosca; 
   //p = new Ull(200,escenari);
   //p1 = new Ull(200,escenari);
   granot = new Granot(escenari);
@@ -385,8 +388,9 @@ function main(){
   //mosca.vola();
   //alert (escenari.maxW());
   //mosca.anima();
-  let movimentMosca = setInterval(function(){ mosca.anima(1);}, 10);
-  let movimentUlls = setInterval(function(){granot.mouNinetaO(mosca);},5);
+  let movimentMosca = setInterval(function(){ mosca.anima(1);}, 1);
+  let movimentUlls = setInterval(function(){granot.mouNinetaO(mosca);},1);
+  let movimentGranot = setInterval(function(){ granot.anima(1);}, 10);
   
  
 }
