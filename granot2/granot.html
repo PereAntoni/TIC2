@@ -1,0 +1,404 @@
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script></head>
+  <body>
+  
+  <div class="row">
+    <div class="col-sm-3" style="background-color:lavenderblush;" id="info0"></div>
+    <div class="col-sm-3" style="background-color:lavender;" id="info"></div>
+    <div class="col-sm-3" style="background-color:lavenderblush;" id="info1"></div>
+    <div class="col-sm-3" style="background-color:lavender;" id="info2"></div>
+  </div>
+  <div id="escenari"></div>
+  </body>
+  <script>
+  window.onload=function(){
+    //document.getElementById("linkid").click();
+    main();
+  };
+  class GuiApp{
+    constructor(id){
+      this.gui = SVG().addTo(id);
+      this.llista= new LlistaObjectes();
+      this.w=500;
+      this.h=500;
+      
+      this.gui.size(this.w,this.h);
+          console.log(this.w +","+ this.h);
+      this.fons = this.gui.rect(this.w,this.h).fill("#888888");
+      //this.gui.click(this.clicat);
+      /*this.gui.on('mousemove', (e) => {
+      // Convert mouse coordinates into canvas coordinates
+        const {x, y} = this.gui.point(e.clientX, e.clientY);
+        let punt = new Punt(x,y);
+        //Sconsole.log("punt: (" + x + "," + y +")");
+        //mouNineta(punt,p);
+        //mouNineta(punt,p1);
+        granot.mouNineta(punt);
+        //p1.mouNineta(punt);
+    //drawAndAnimate(x, y)
+  
+    // You want an echo? Uncomment this!
+    // setTimeout(() => drawAndAnimate(x, y), 200)
+    // setTimeout(() => drawAndAnimate(x, y), 400)
+  })*/
+    }
+    clicat(e){
+      console.log(escenari.w);
+      console.log("clicat sobre x: " + escenari.clientX + ", y:" + escenari.clientY);
+      let punt = new Punt(e.x,e.y);
+      console.log(p.distancia(punt));
+    }
+    calculateScale() {
+          this.w = window.innerWidth; // screen width
+          this.h = window.innerHeight;
+          console.log("la finestra es de " + this.w + "," + this.h);
+          this.scale = (this.screen > this.screenHeight) ? this.screenHeight/800 : this.screen/1200;
+          this.stickWidth = 180*this.scale;
+          this.steps = this.screen/this.stickWidth; 
+        
+      // how many steps (stick width + margin) it takes from one end to another
+    }
+    afegirObjecte(o){
+      this.llista.nouObjecte(o);
+      
+    }
+    maxW(){return this.w;}
+    maxH(){return this.h;}
+  }
+  
+  class Punt{
+    constructor(x,y){
+      this.x=x;
+      this.y=y;
+    }
+    x(){return this.x;}
+    y(){return this.y;}
+    distancia(p){
+      let d=Math.sqrt(Math.pow((p.x-this.x),2) + Math.pow((p.y-this.y),2));
+      //Math.sqrt(Math.pow(punt.x-d.x,2) + (Math.pow(punt.y-d.y),2));
+      return d;
+    }
+  }
+  
+  class LlistaObjectes{
+    constructor(){this.llista = [];}
+    nouObjecte(objecte){
+      console.log("ficant un nou objecte " + objecte.constructor.name);
+      this.llista.push(objecte);}
+    llistaObjectes(){
+      let i=0;
+      console.log("LLISTA ANIMALS");
+      this.llista.forEach(function logArrayElements(element, index, array) {console.log('llista[' + index + '] = ' + element.constructor.name);i++;
+  });
+      /*for (i;(this.llista.length);i++){
+        console.log("----" + i + ") " + this.llista[i].constructor.name);
+      }*/
+      return (i + " objectes mostrats per consola");
+    }
+    fesMetode(metode){
+      console.log("FENT MÈTODE " + metode + " A TOTS ELS ANIMALS");
+     this.llista.forEach(function logArrayElements(element, index, array) {
+       //console.log("enviant accio " + accio);
+       eval("element." + metode);
+       //eval(array[index] + "." + accio);
+       //array[index] => accio;
+     }); 
+      return "Mètode " + metode + " fet a tots els objectes";
+    }
+  }
+  
+  class Ull{
+    constructor(diametre,escenari){
+      this.atributs(diametre,1);
+      this.punt= new Punt(0,0);
+      this.ull = escenari.gui.ellipse(this.diametre,this.diametre).fill("#aa0");
+      this.nineta = escenari.gui.ellipse(this.diametreNineta,this.diametreNineta).fill("#000").move(this.posNineta.x,this.posNineta.y);
+      this.group= escenari.gui.group();
+      this.group.add(this.ull);
+      this.group.add(this.nineta);
+    }
+    atributs(d,v){
+      this.diametre=d*v;
+      //this.escala=v;
+      this.radi=this.diametre/2;
+      this.diametreNineta=this.radi/2;
+      this.radiNineta=this.diametreNineta/2;
+      let punt = new Punt(0,0);
+      this.centre= new Punt(punt.x+this.radi,punt.y+this.radi);
+      let x = ((this.radi)-(this.radiNineta)+ punt.x);
+      let y = ((this.radi)-(this.radiNineta)+ punt.y);
+      this.posNineta= new Punt(x,y);
+      document.getElementById("info0").innerHTML = "ULL: centre: ("+ this.centre.x + "," + this.centre.y + ") diametre: " + this.diametre + "radi: " + this.radi + ", diametreNineta: " + this.diametreNineta + ", posNineta: " + this.posNineta.x + ", " + this.posNineta.y;
+    }
+    escala(v){
+      this.group.scale(v);
+      this.escala=v;
+      //this.atributs(this.diametre,v);
+    }
+    distancia(punt){
+      //let d = Math.sqrt(Math.pow(punt.x-this.posNineta,2)-Math.pow(punt.y-this.posNineta,2));
+      //on es la nineta??
+      let d = this.centre;
+      let distancia = d.distancia(punt);
+      
+      //console.log ("els punt (" + punt.x + ", " + punt.y + ") i (" + d.x + "," + d.y + ") estan a una distància " + distancia);
+      return distancia;
+    }
+    mou(x,y){
+      this.group.move(x,y);
+    }
+    
+    mouNineta(punt){
+      //MOU LA NINETA DELS ULLS RESPECTE
+      //AL PUNT punt.
+      //NO ESTÀ ESTUDIAT QUE NO SURTI DE L'ULL
+      //S'HA POSAT 0.03 PER DEFECTE!!!
+      let x=0;
+      let y=0;
+      
+      //transportam el punts
+      //depenent del centre de l'ull
+      let cx=this.centre.x + this.group.x();
+      let cy=this.centre.y + this.group.y();
+      
+      x = punt.x- cx;
+      y=  punt.y - cy;
+  
+      //calculam la distància, però no la usam
+      let d = this.distancia({x,y});
+      
+      
+      //document.getElementById("info").innerHTML="Moure nineta respecte al punt: " + punt.x() + ", " + punt.y() + "distancia: " + d + "pgroup: " + this.group.x() + ", " + this.group.y();
+      //if ((punt.x>p.centre.x) && (punt.y<p.centre.y)){
+      
+      //ara falta trobar el màxim que pot sortir
+          x= cx + x*0.03;
+          y= cy + y*0.03;
+      //}
+      this.nineta.center(x,y);
+     
+    }
+  }
+  
+  
+  class Animal{
+    constructor(draw){
+          console.log(this.seleccionat);
+          this.group = draw.gui.group();
+      this.group.seleccionat = false;
+      this.draw=draw;
+          //this.group.events = new ControlEvents();
+          //this.group.click(this.group.events.click(this));
+  }
+      getPosicio(){
+          return this.group.x();
+      }
+    rotar(g){
+      this.group.rotate(g);
+    }
+    escala(e){
+      this.group.scale(e);
+    }
+    bizco(){
+      this.nineta1.dmove(-5,0);
+      this.nineta2.dmove(-5,0);
+    }
+    xerra(){alert("som un animal");}
+      selecciona(){
+          console.log("Seleccionat: " + this.seleccionat);
+          if(this.seleccionat){
+              this.seleccionat=false;
+              this.group.addClass("seleccionat");
+          }else{
+              this.seleccionat=true;
+              this.group.addClass("seleccionat");
+          }
+      }
+    mou(x,y){this.group.move(x,y)}
+    punt(){
+      return new Punt(this.group.x(),this.group.y());
+    }
+    anima(v){
+        //controlam l'animació del grup 
+        let info="La mosca:" + v  + "<br>";
+        //this.gira ens indica la direcció
+        //miram si és a fora
+        
+        if (this.giraX===undefined){this.giraX=false;}
+        info = info + this.giraX + "<br>";
+        
+        const dreta = this.group.bbox().x2;
+        if(!this.giraX){
+          info=info+"faig v";
+          this.group.dmove(v,0);
+          if(dreta>this.draw.maxW()){this.giraX=true;}  
+        }
+        else{
+          info=info+"faig -v";
+          this.group.dmove(-v,0);
+          if((this.group.x()-v)<0){this.giraX=false;}  
+        }
+  
+  
+        /*if((dreta>this.draw.maxW())||(this.group.bbox().x-v<0))
+                    {this.gira=!this.gira;
+                    info = info +" ha girat" + this.gira;}
+              else  {info = info +" no ha girat" + this.gira ;}
+  
+        if(!this.gira){this.group.animate().dmove(v,0);}
+        else{this.group.animate().dmove(-v,0);}*/
+  
+        info= info + "<br>x: " + this.group.bbox().x + ", x2:" + this.group.bbox().x2;
+        info = info + "<br>y: " + this.group.bbox().y + ", y2:" + this.group.bbox().y2;
+        document.getElementById("info").innerHTML= info;
+        
+        
+      }
+  }
+  
+  class Mosca extends Animal{
+      constructor(draw){
+          super(draw);
+          this.alaD=draw.gui.ellipse(20,30).fill("#aaa").move(10,4);
+          this.alaE=draw.gui.ellipse(20,30).fill("#aaa").move(0,4);
+          this.cos= draw.gui.ellipse(20,30).fill("#434").move(5,0);
+          this.ull1=draw.gui.ellipse(5,5).fill("#f33").move(10,0);
+          this.ull2=draw.gui.ellipse(5,5).fill("#f33").move(15,0);
+          this.group.add(this.alaD);
+      this.group.add(this.alaE);
+          this.group.add(this.cos);
+          this.group.add(this.ull1);
+      this.group.add(this.ull2 );
+      this.gira=false;
+          //this.ull2=draw.ellipse(5,5).fill("#f33").move(10,0);
+      }
+      vola(){
+          console.log(this.draw.maxW() + "(" + this.group.x() +", " + this.group.y() + ")");
+          //this.group.animate().dmove(10,0);
+  
+          //MOVIMENT CAP A LA DRETA
+          if(!this.gira){this.group.animate().dmove(10,0);}
+          else{this.group.animate().dmove(-10,0);}
+          if(this.group.x()>this.draw.maxW()){alert("he sortit");}
+  
+          if((this.group.x()>this.draw.maxW())||(this.group.x()<0))
+              {this.gira=!this.gira;}
+          //this.interval = setInterval(this.v(),1000);
+          //this.interval = setInterval(function () {me.v();}, 1000);
+          //this.vola = setInterval( (this => this.v()) , 1000);
+          //this.e.addEventListener("click", ev => this.pitjat());
+      }
+      v(){
+          console.log("he entrat a v" + me.ull1);
+          if(this.group.getPosicio.x>this.draw.w){
+            this.group.animate().dmove(10,0);  
+          }else{
+            this.group.animate().dmove(-100,0);
+          }
+          
+      }
+      
+      movimentMosca(on){
+          //el moviment de la mosca 
+          
+          if (this.mov===undefined){this.mov=0;}
+          this.mov++;
+          //console.log(this.mov);
+          let x= Math.floor(Math.random() * 50);
+          let y= Math.floor(Math.random() * 50);
+          //moviments que canvien cada 10 voltes
+          if(this.mov>50){x=-x;y=-y;if(this.mov>100){this.mov=0;}}
+          //alert(this.group.x());
+          if(on.w<this.group.x())
+              {
+                  //console.log("condició x: " + (on.w)*2 + ", " + this.group.x() );
+               x=-x;}
+          if(on.h<this.group.y())
+              {
+                  //console.log("condició y: " + (on.h)*2 + ", " + this.group.y() ); 
+                  y=-y;}
+          
+          //console.log("la mosca es mou" + x);
+          this.group.animate(100,100,'now').dmove(x,y);
+      }
+  }
+  
+  class Granot extends Animal{
+    constructor(draw){
+      super(draw);
+      console.log(this.seleccionat);
+      this.cos  = draw.gui.ellipse(150,80).fill("#0f6").stroke("#000").move(0,10); 
+      //this.ull1 = draw.circle(40).fill("#fff").move(40,0).stroke("#000");
+      //this.ull2 = draw.circle(40).fill("#fff").move(90,0).stroke("#000");
+      //this.nineta2 = draw.circle(10).fill("#000").move(110,10);
+      //this.nineta1 = draw.circle(10).fill("#000").move(60,10);
+      this.ull1 = new Ull(30,draw);
+      this.ull2 = new Ull(30,draw);
+      this.ull1.mou(45,0);
+      this.ull2.mou(75,0);
+      
+      this.boca= draw.gui.line(50,60,100,60).stroke({ color: '#000', width: 2, linecap: 'round' });
+      this.group.add(this.cos);
+      this.group.add(this.ull1.group);
+      this.group.add(this.ull2.group);
+      this.group.add(this.nineta2);
+      this.group.add(this.nineta1);
+      
+      this.group.add(this.boca);
+          this.boca.click(this.xerra);
+          
+      //this.group.click(this.bizco);
+      //this.group.click(croa);
+    }
+    xerra(){alert ("Som un granot");}
+  
+    mouNinetaO(o){
+      //treim el punt de l'objecte que ha de seguir la nineta
+      //escriu("info2","seguint a " + o.punt().x() + ", " + o.punt().y());
+      escriu("info2","seguint moviment");
+      this.mouNineta(o.punt());
+      
+    }
+    mouNineta(p){
+        this.ull1.mouNineta(p);
+        this.ull2.mouNineta(p);
+    }
+  }
+  
+  function escriu(lloc,texte){
+    document.getElementById(lloc).innerHTML=texte;
+  }
+  
+  
+  
+  function main(){
+     let escenari  = new GuiApp("#escenari");
+  let p,p1;
+  let granot;
+  let mosca; 
+    //p = new Ull(200,escenari);
+    //p1 = new Ull(200,escenari);
+    granot = new Granot(escenari);
+    mosca = new Mosca(escenari);
+    granot.mou(100,300);
+    mosca.mou(10,10);
+    //mosca.vola();
+    //alert (escenari.maxW());
+    //mosca.anima();
+    let movimentMosca = setInterval(function(){ mosca.anima(1);}, 1);
+    let movimentUlls = setInterval(function(){granot.mouNinetaO(mosca);},1);
+    let movimentGranot = setInterval(function(){ granot.anima(1);}, 10);
+    
+   
+  }
+  
+  function aturaMosca(){
+    //movimentMosca.
+  }
+  
+  
+  
+  </script>
