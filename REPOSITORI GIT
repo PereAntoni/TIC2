@@ -1,0 +1,16 @@
+REPOSITORI GIT
+
+Git és un repositori de versions, ens pertmet guardar diferents versions del nostres projectes.
+
+pots veure la definició a la wikipèdia: https://ca.wikipedia.org/wiki/Git
+
+les instruccions bàsiques que usarem:
+
+//per crear un repositori
+git init
+
+//per afegir 
+git add -A 
+
+//per identificar el commit (versió guardada)
+git commit -m "Work on lab 1"
