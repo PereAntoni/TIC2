@@ -69,6 +69,10 @@ La llibreria arcade disposa d'unes primitives (funcions de dibuix) que ens perme
         - FES QUATRE QUADRATS DE DIFERENTS COLORS QUE, entre tots, OCUPIN TOTA LA PANTALLA.
 
 8. UN EXEMPLE SENCER.
+
+    #En informàtica això s'anomena un codi spaguetti.
+    #A les pròximes sessió empram FUNCIONS.
+    
         """
         This is a sample program to show how to draw using the Python programming
         language and the Arcade library.
@@ -153,11 +157,14 @@ La llibreria arcade disposa d'unes primitives (funcions de dibuix) que ens perme
         arcade.run()
 
     
+    
     EXERCICI: DIBUIXA AL QUADERN UN DISSENY D'UN ARBRE AMB VARIES COPES.
 
-En informàtica això s'anomena un codi spaguetti.
+Abans d'acabar la sessió has de pensar a pujar el codi a github.
+    git add .
+    git commit -m "data avui"
+    git push
 
-A la pròxima sessió empram FUNCIONS.
 
 
 
