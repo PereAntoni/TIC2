@@ -9,8 +9,19 @@ les instruccions bàsiques que usarem:
 //per crear un repositori
 git init
 
-//per afegir 
+//per afegir tots els fitxers i carpetes al repositori
 git add -A 
 
 //per identificar el commit (versió guardada)
 git commit -m "Work on lab 1"
+
+//especificam el diposit remot que volem fer servir
+//https://github.com/PereAntoni/
+//https://github.com/PereAntoni/curs-tic2
+//git remote add <nom> <url>
+
+
+git remote add origin https://github.com/aqui-teu-repo.git
+
+//per pujar al nostre repositori de GITHUB
+git push
