@@ -1,0 +1,53 @@
+
+BLOC 1. PROGRAMACIÓ
+    Estructures d’emmagatzematge. Diferents tipus.     
+    Algorísmia i codificació. Estructures de control. Diagrames de flux. 
+    Codificació de programes amb un llenguatge d’alt nivell.     
+    Traçabilitat, depuració i optimització d’un codi de programació. 
+BLOC 2. PUBLICACIÓ I DIFUSIÓ DE CONTINGUT
+    Publicació i difusió de continguts. 
+    Blogs.     Disseny de pàgines web. El llenguatge HTML.     
+    Els gestors de continguts. Xarxes socials.
+    Eines web 2.0. Treball col·laboratiu. 
+BLOC 3. SEGURETAT
+    Introducció a la seguretat informàtica. 
+    Contra     què ens hem de protegir?
+    Seguretat activa i passiva. 
+    Les amenaces silencioses.
+    Els programes que protegeixen el nostre ordinador.
+
+ 
+
+BLOC 1. PROGRAMACIÓ
+    UNITAT 1: ESTRUCTURA DEL COMPUTADOR, EL SISTEMA OPERATIU I EINES DE PROGRAMADOR
+        FUNCIONAMENT BÀSIC ORDINADOR
+        SISTEMES EMMAGATZEMATGE ORDINADOR
+        NOMBRES BINARIS
+        ÚS DEL SHELL.
+        REPOSITORI GITHUB.
+    UNITAT 2 : DIAGRAMES DE FLUX PSEUDOCODI. PRIMERS PROGRAMES.
+        ENTENDRE UML I PSEUDOCODI.
+        EDITORS DE UML. PLANT UML.
+        PROBLEMES D’EXEMPLE.
+    UNITAT 3: ELS LLENGUATGES DE PROGRAMACIÓ. PROGRAMAM EN PYTHON
+        PRIMERS PROGRAMES
+        CONTROL DE PROGRAMA AMB CONDICIONALS
+        VARIABLES LOCALS I GLOBALS.
+    UNITAT 4: ESTRUCTURES DE DADES
+        CONTROL DE PROGRAMA AMB BUCLES
+        ESTRUCTURES ARRAY, PILES I LLISTES
+        ALGORITMES CLÀSSICS
+    UNITAT 5: OPTIMITZACIÓ DE CODI. FUNCIONS I CLASSES
+        FUNCIONS TEORIA I PROBLEMES
+        PILARS DE LA PROGRAMACIÓ ORIENTADA A OBJECTES.
+BLOC 2. PUBLICACIÓ I DIFUSIÓ DE CONTINGUT
+    UNITAT 6: FUNCIONAMENT DE LA XARXA
+    UNITAT 7: EL LLENGUATGE HTML
+    UNITAT 8: GESTORS DE CONTINGUT
+    UNITAT 9: PROGRAMANT SOBRE EL WEB. FUNCIONS API.
+BLOC 3. SEGURETAT
+    UNITAT 11: SEGURETAT LOCAL
+    UNITAT 12: SEGURETAT A LA XARXA
+ 
+ 
+ 
