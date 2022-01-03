@@ -1,0 +1,164 @@
+DIBUIXANT SOBRE LA COMPUTADORA
+
+Primerament hem conegut la forma bàsica d'un programa, hem usat la intrucció print com a unic sistema de comunicació amb el computador.
+Ara ens toca provar els gràfics. Farem una pràctica de programació:
+
+0. Abans de començar
+-S'ha instal·lar la llibreria hem de tenir instal·lat "arcade"
+-ho feim amb el gestor "pip" mitjançant l'ordre "pip install arcade"
+
+1. Cream un nou arxiu.
+2. Comentam el codi. "Exercici de dibuix, nom, data"
+3. Importam la llibreria arcade. Al codi hem de posar a la primera línea
+"import arcade"
+4. afegim la línia "arcade.open_window(600, 600, "Finestra exemple")"
+
+Ara ja tenim una interfície gràfica de 600 x 800 pixels amb el títol "Finestra exemple"
+Peró quan obrim el programa sols surt una estoneta.
+
+Per tant:
+
+-> Afegim la línia "arcade.run()"
+
+5. NETEJAM LA PANTALLA.
+
+- La instrucció per controlar el color de fons és
+arcade.set_background_color()
+
+- Abans de veure la pantalla necessitam dues intruccions:
+        arcade.start_render (inici de pintar)
+        #pintam
+        arcade.finish_render
+
+6. COLORS.
+
+-Per especificar els color podem usar tres formes diferents:
+    - L'API de colors arcade.color amb els seus noms
+    - L'API de colors de css arcade.csscolor
+    - Especificant els colors RGB (0-255,0-255,0-255), 
+    arcade.set_background_color((189, 55, 180))
+
+6.1 BYTE
+- Recordam que un byte és un grup de 8 bits i pot tenir els valors de 0 fins a 255
+    2 elevat a 8 = 256
+
+CONTROL DE COORDENADES
+- Les coordenades cartesianes
+- A dalt a la dreta és el (0,0)
+
+7. DIBUIXANT ELEMENTS
+La llibreria arcade disposa d'unes primitives (funcions de dibuix) que ens permeten dibuixar:
+    - Rectangles: arcade.draw_lrtb_rectangle_filled(0, 599, 300, 0, arcade.csscolor.GREEN)
+    - Cercles: arcade.draw_circle_filled(100, 350, 30, arcade.csscolor.DARK_GREEN)
+    - Elipses: arcade.draw_ellipse_outline(300, 300, 350, 200, arcade.csscolor.RED, 3)
+    - Arcs: arcade.draw_arc_filled(300, 340, 60, 100, arcade.csscolor.DARK_GREEN, 0, 180)
+    - Triangles: arcade.draw_triangle_filled(400, 400, 370, 320, 430, 320, arcade.csscolor.DARK_GREEN)
+    - Polígons: arcade.draw_polygon_filled(((500, 400),
+                            (480, 360),
+                            (470, 320),
+                            (530, 320),
+                            (520, 360)
+                            ),
+                           arcade.csscolor.DARK_GREEN)
+    - Línies: arcade.draw_line(500, 550, 550, 600, arcade.color.YELLOW, 3)
+    - Texte: arcade.draw_text("Arbor Day - Plant a Tree!",
+                 150, 230,
+                 arcade.color.BLACK, 24)
+
+    EXERCICI: 
+        - FES QUATRE QUADRATS DE DIFERENTS COLORS QUE, entre tots, OCUPIN TOTA LA PANTALLA.
+
+8. UN EXEMPLE SENCER.
+        """
+        This is a sample program to show how to draw using the Python programming
+        language and the Arcade library.
+        """
+
+        # Import the "arcade" library
+        import arcade
+
+        # Open up a window.
+        # From the "arcade" library, use a function called "open_window"
+        # Set the window title to "Drawing Example"
+        # Set the dimensions (width and height)
+        arcade.open_window(600, 600, "Drawing Example")
+
+        # Set the background color
+        arcade.set_background_color(arcade.csscolor.SKY_BLUE)
+
+        # Get ready to draw
+        arcade.start_render()
+
+        # Draw a rectangle
+        # Left of 0, right of 599
+        # Top of 300, bottom of 0
+        arcade.draw_lrtb_rectangle_filled(0, 599, 300, 0, arcade.csscolor.GREEN)
+
+        # Tree trunk
+        arcade.draw_rectangle_filled(100, 320, 20, 60, arcade.csscolor.SIENNA)
+
+        # Tree top
+        arcade.draw_circle_filled(100, 350, 30, arcade.csscolor.DARK_GREEN)
+
+        # Another tree, with a trunk and ellipse for top
+        arcade.draw_rectangle_filled(200, 320, 20, 60, arcade.csscolor.SIENNA)
+        arcade.draw_ellipse_filled(200, 370, 60, 80, arcade.csscolor.DARK_GREEN)
+
+        # Another tree, with a trunk and arc for top
+        # Arc is centered at (300, 340) with a width of 60 and height of 100.
+        # The starting angle is 0, and ending angle is 180.
+        arcade.draw_rectangle_filled(300, 320, 20, 60, arcade.csscolor.SIENNA)
+        arcade.draw_arc_filled(300, 340, 60, 100, arcade.csscolor.DARK_GREEN, 0, 180)
+
+        # Another tree, with a trunk and triangle for top
+        # Triangle is made of these three points:
+        # (400, 400), (370, 320), (430, 320)
+        arcade.draw_rectangle_filled(400, 320, 20, 60, arcade.csscolor.SIENNA)
+        arcade.draw_triangle_filled(400, 400, 370, 320, 430, 320, arcade.csscolor.DARK_GREEN)
+
+        # Draw a tree using a polygon with a list of points
+        arcade.draw_rectangle_filled(500, 320, 20, 60, arcade.csscolor.SIENNA)
+        arcade.draw_polygon_filled(((500, 400),
+                                    (480, 360),
+                                    (470, 320),
+                                    (530, 320),
+                                    (520, 360)
+                                    ),
+                                arcade.csscolor.DARK_GREEN)
+
+        # Draw a sun
+        arcade.draw_circle_filled(500, 550, 40, arcade.color.YELLOW)
+
+        # Rays to the left, right, up, and down
+        arcade.draw_line(500, 550, 400, 550, arcade.color.YELLOW, 3)
+        arcade.draw_line(500, 550, 600, 550, arcade.color.YELLOW, 3)
+        arcade.draw_line(500, 550, 500, 450, arcade.color.YELLOW, 3)
+        arcade.draw_line(500, 550, 500, 650, arcade.color.YELLOW, 3)
+
+        # Diagonal rays
+        arcade.draw_line(500, 550, 550, 600, arcade.color.YELLOW, 3)
+        arcade.draw_line(500, 550, 550, 500, arcade.color.YELLOW, 3)
+        arcade.draw_line(500, 550, 450, 600, arcade.color.YELLOW, 3)
+        arcade.draw_line(500, 550, 450, 500, arcade.color.YELLOW, 3)
+
+        # Draw text at (150, 230) with a font size of 24 pts.
+        arcade.draw_text("Arbor Day - Plant a Tree!",
+                        150, 230,
+                        arcade.color.BLACK, 24)
+
+        # Finish drawing
+        arcade.finish_render()
+
+        # Keep the window up until someone closes it.
+        arcade.run()
+
+    
+    EXERCICI: DIBUIXA AL QUADERN UN DISSENY D'UN ARBRE AMB VARIES COPES.
+
+En informàtica això s'anomena un codi spaguetti.
+
+A la pròxima sessió empram FUNCIONS.
+
+
+
+

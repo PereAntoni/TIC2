@@ -1,9 +1,10 @@
 1. INTRODUCCIÓ A L'ASSIGNATURA.
     -CONTINGUTS: 
         - INSTRUCCIÓ PING: http://aula2.gimnesia.net/2021/02/04/xarxes-locals/
+        - NOMBRES BINARIS APLICACIÓ SOBRE IP'S
         - INSTRUCCIONS BÀSIQUES TERMINAL: http://aula2.gimnesia.net/2021/10/14/interficie-de-comandes-2-2-2/
     - ENTREGUES:
-        - exercis shell
+        - exercicis shell
         - quadern de pràctiques.
     - Examen tipus test
 2. ELS LLENGUATGES DE PROGRAMACIÓ.

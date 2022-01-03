@@ -26,8 +26,10 @@ class Figura:
     def update(self):
         """ Code to control the figura's movement. """
         pass
-        
+       
 
+class Fons():
+    pass
 
 class Ball(Figura):
     def draw(self):
