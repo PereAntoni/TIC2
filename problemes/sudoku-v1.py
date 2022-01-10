@@ -1,7 +1,9 @@
 """
 SUDOKU
 Volem saber si un sudoku està perfectament resolt.
-
+VERSIÓ 1: COMPROVAM RECORREGUTS DE FILA
+Té un error de imprimir. 
+Exercici: s'ha de trobar on té l'errada.
 """
 
 
