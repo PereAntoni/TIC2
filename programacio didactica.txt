@@ -1,4 +1,3 @@
-
 BLOC 1. PROGRAMACIÓ
     Estructures d’emmagatzematge. Diferents tipus.     
     Algorísmia i codificació. Estructures de control. Diagrames de flux. 

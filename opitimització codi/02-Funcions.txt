@@ -1,0 +1,103 @@
+FUNCIONS
+
+Ja sabem com funcionen les variables i quins tipus d'estructures existeixen.
+En aquest capítol aprenem les funcions.
+
+1. FUNCIÓ:
+    És una part del codi amb nom propi que a partir d'unes entrades genera unes sortides.
+
+    Coses a tenir en compte:
+
+        - Una funció no séxecuta si no la invoquen
+        - Una funció ha d'estar implementada
+        - Hi ha funcions primitives, pròpies del llenguatge 
+        - Existeix una funció principal que s'anomena main, aquesta si que s'executa i conté la part principal del codi.
+
+
+2. FUNCIONALITAT DE LES FUNCIONS:
+    
+    - Facilitar la lectura del codi: separam en bloc de instruccions "repetitives".
+        Per exemple alhora de dibuixar un arbre podriem dir dibuixaArbre(posició,mida)
+
+    - Permetre l'abstracció: separa el QUÈ del COM, 
+        Donam un nom a una acció i el programador no importa que sapiga la seva implementació.
+        Això sí, la implementació ha d'estar ben definida.
+    
+    - Reutilitzar el codi: Una bona funció estalvia feina.
+
+    - Dividim el problema en petits problemes diferents.
+
+    - El codi és més fàcil de mantenir: Cada part de codi és independent.
+
+
+
+3. INVOCACIÓ D'UNA FUNCIÓ. EL QUÈ.
+
+    Una funció té: 
+        NOM: ha de ser únic i definitori de la funció
+        PARÀMETRES ENTRADA: són les dades que d'entrada a la funció
+        RETORN O SORTIDA: és el resultat de es operacions
+
+    Nosaltres ja hem usat funcions, la instrucció print és una funció primitiva del python.
+    
+        print("Som un paràmetre")
+    
+    Com ja sabem aquesta funció ens imprimeix sobre consola el QUÈ li passam per paràmetre.
+
+4. IMPLEMENTACIÓ D'UNA FUNCIÓ. EL COM.
+
+    La implementació d'una funció és el codi que té com objectiu realitzar unes operacions sobre els paràmetres que li donam i retornar un resultat.
+    El resultat pot ser un número, una lista d'objectes, un gràfic per pantalla, ...
+
+    La forma d'una funció és:
+        
+        nom_de_la_funcio (parametre1, parametre2){
+            ....
+            operacions
+            ...
+            return valor
+        }
+
+    per exemple si volem fer una funció que ens sumi dos nombres:
+
+        suma_dos_nombres(a,b){
+            return a + b
+        }
+
+        
+    per definir una nova funció a python es fa de la següent manera:
+
+    - S'inicia amb la paraula clau def
+    - Desprès té el nom de la funció, el nom:
+        - Comença amb minúscula, normalment s'usen només minúscules.
+        - No pot tenir espais
+    - Dins un parèntesis hi ha els paràmetres.
+    - desprès dos punts.
+    - Els següent és El codi
+
+    Exemples: 
+    - una funció que imprimeix "Bon dia"
+
+            def print_bon_dia():
+                print ("Bon dia!!")
+            
+            #per invocar dues vegades
+            print_bon_dia()
+            print_bon_dia()
+    - Ordenament d'una llista. "Algorisma bimbolla"
+        
+        def bubbleSort(array):
+        n = len(array)
+
+        for i in range(n):
+            for j in range(0, n-i):
+                if array[j] > array[j+1]:
+                    array[j], array[j+1] = array[j+1], array[j]
+
+        array = [200 ,190, 1200, 1, 2, 4, 55, 1000, 6, 800]
+        bubbleSort(array)
+
+        print(array)
+
+
+

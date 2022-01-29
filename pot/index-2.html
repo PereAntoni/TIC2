@@ -1,0 +1,358 @@
+<html>
+<head>
+<style>
+    body,
+html {
+  background: #777;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+#can {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #333;
+  margin: 0 auto;
+}
+
+#timer-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: lightseagreen;
+}
+
+.menu-button {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  left: 10px;
+  top: 10px;
+  padding: 5px;
+  cursor: pointer;
+  opacity: 0.3;
+}
+.menu-button:hover {
+  opacity: 1;
+  transition: opacity .5s;
+}
+.menu-line {
+  height: 10%;
+  margin: 20% 0;
+  background: #777;
+}
+
+#menu {
+  border-radius: 5px;
+  padding: 10px;
+  width: 320px;
+  background: rgba(255, 255, 255, .5);
+  display: none;
+}
+</style>
+</head>
+<body>
+<div id="timer-bar"></div>
+  <div class="menu-button" onclick="toggleMenu()">
+    <div class="menu-line"></div>
+    <div class="menu-line"></div>
+    <div class="menu-line"></div>
+    <div id="menu">
+      <label><input type="checkbox" onclick="toggleGfx(event)" checked> Fancy graphics (very slow on weak GPU's)</label>
+    </div>
+  </div>
+  <canvas id="can"></canvas>
+</body>
+<script>
+    /*
+NOTE: Deviceorientation event does not work inside an iframe, so only keyboard input will work here.
+If you're unable to move the particles with the keyboard, click on the canvas to have it focused
+
+*/
+const canvas = document.getElementById("can");
+const ctx = canvas.getContext("2d");
+const particleCount = 40;
+const particles = [];
+const tiltTreshold = 0.015;
+const maxIdleFrames = 600; // ~5sec
+let idleFrames = 600;
+let menuVisible = false;
+let eyeCandy = false;
+
+const keys = {
+  left:  { code: 37, active: false },
+  up:    { code: 38, active: false },
+  right: { code: 39, active: false },
+  down:  { code: 40, active: false },
+};
+
+const orientation = {
+  supported: false,
+  alpha: 0,
+  beta: 0,
+  gamma: 0,
+};
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+class Particle {
+  constructor(x, y,i) {
+    this.weight = 0.9 + Math.random() * .5;
+    this.terminalVelocity = 10 + Math.random() * 4;
+    this.damp = .9;
+    
+    //this.image= new Image();
+    //this.image.src=i;
+
+    
+
+    this.startPos = {
+      x: x || Math.random() * canvas.width,
+      y: y || Math.random() * canvas.height,
+    };
+
+    this.position = { ...this.startPos };
+
+    this.velocity = {
+      x: 0,
+      y: 0,
+    };
+
+    this.bounds = {
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+    };
+
+    this.size = 100;
+
+    this.color = {
+      r: Math.floor(70 + Math.random() * 185),
+      g: Math.floor(70 + Math.random() * 185),
+      b: Math.floor(70 + Math.random() * 185),
+    };
+
+    const grd = ctx.createRadialGradient(0, 0, this.size, 0, 0, this.size * 5);
+    grd.addColorStop(0, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, .03)`);
+    grd.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+    this.glow = grd;
+  }
+
+  updateBounds() {
+    this.bounds.top = this.position.y;
+    this.bounds.bottom = this.position.y + this.size;
+    this.bounds.left = this.position.x;
+    this.bounds.right = this.position.x + this.size;
+  }
+
+  draw() {
+    ctx.save();
+    ctx.translate(this.position.x, this.position.y);
+    //ctx.drawImage(this.image, 0, 0, 100, 100);
+
+    if (eyeCandy === true) {
+      ctx.globalCompositeOperation = "lighter";
+      ctx.fillStyle = this.glow;
+      ctx.fillRect(-this.size * 10, -this.size * 10, this.size * 20, this.size * 20);
+    }
+
+    ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, .7)`;
+    ctx.fillRect(0.5, 0.5, this.size, this.size);
+
+    if (eyeCandy === true) {
+      ctx.globalCompositeOperation = "source-over";
+    }
+    ctx.restore();
+  }
+
+  update() {
+    // Move particles with motion if device has accelerometer
+    if (orientation.supported) {
+      if (Math.abs(orientation.gamma) > tiltTreshold) {
+        this.velocity.x = clamp(this.velocity.x + (orientation.gamma * (this.weight + 1)), -this.terminalVelocity, this.terminalVelocity);
+        idleFrames = 0;
+      }
+
+      if (Math.abs(orientation.beta) > tiltTreshold) {
+        this.velocity.y = clamp(this.velocity.y + (orientation.beta * (this.weight + 1)), -this.terminalVelocity, this.terminalVelocity);
+        idleFrames = 0;
+      }
+      
+      // Device is leveled, begin deaccelerating particles
+      if (Math.abs(orientation.gamma) < tiltTreshold && Math.abs(orientation.beta) < tiltTreshold) {
+        if (idleFrames < maxIdleFrames) {
+          this.velocity.x = lerp(this.velocity.x, 0, this.weight / 50);
+          this.velocity.y = lerp(this.velocity.y, 0, this.weight / 50);
+        } else {
+          // Idle counter reached it's max, return particles to their starting positions
+          this.velocity.x = 0;
+          this.velocity.y = 0;
+          this.position.x = lerp(this.position.x, this.startPos.x, this.weight / 10);
+          this.position.y = lerp(this.position.y, this.startPos.y, this.weight / 10);
+        }
+      }
+    }
+
+    // Otherwise use keys
+    else {
+      if (keys.up.active) {
+        this.velocity.y = Math.max(this.velocity.y - this.weight, -this.terminalVelocity);
+        idleFrames = 0;
+      }
+      if (keys.down.active) {
+        this.velocity.y = Math.min(this.velocity.y + this.weight, this.terminalVelocity);
+        idleFrames = 0;
+      }
+      if (keys.left.active) {
+        this.velocity.x = Math.max(this.velocity.x - this.weight, -this.terminalVelocity);
+        idleFrames = 0;
+      }
+      if (keys.right.active) {
+        this.velocity.x = Math.min(this.velocity.x + this.weight, this.terminalVelocity);
+        idleFrames = 0;
+      }
+
+      // Begin deaccelerating if no keys are pressed
+      if (!keys.left.active && !keys.up.active && !keys.right.active && !keys.down.active) {
+        if (idleFrames < maxIdleFrames) {
+          this.velocity.x = lerp(this.velocity.x, 0, this.weight / 50);
+          this.velocity.y = lerp(this.velocity.y, 0, this.weight / 50);
+        } else {
+          this.velocity.x = 0;
+          this.velocity.y = 0;
+          this.position.x = lerp(this.position.x, this.startPos.x, this.weight / 10);
+          this.position.y = lerp(this.position.y, this.startPos.y, this.weight / 10);
+        }
+      }
+    }
+
+    // Apply velocity
+    this.position.x += this.velocity.x;
+    this.position.y += this.velocity.y;
+
+    // Handle collision with canvas edges
+    this.updateBounds();
+    if (this.bounds.top < 0) {
+      this.position.y = 0;
+      this.velocity.y = -this.velocity.y * this.damp;
+    }
+    if (this.bounds.bottom > canvas.height) {
+      this.position.y = canvas.height - this.size;
+      this.velocity.y = -this.velocity.y * this.damp;
+    }
+    if (this.bounds.left < 0) {
+      this.position.x = 0;
+      this.velocity.x = -this.velocity.x * this.damp;
+    }
+    if (this.bounds.right > canvas.width) {
+      this.position.x = canvas.width - this.size;
+      this.velocity.x = -this.velocity.x * this.damp;
+    }
+  }
+}
+
+
+
+(function init() {
+  // Create particles
+  let grup = ["pere1.png","pere2.png","mitos.png","tomeu.png","ronki.png"];
+  let i=0;
+  for (let i = 0; i < 20; i++) {
+    const maxRadius = window.innerWidth < window.innerHeight ? window.innerWidth / 2: window.innerHeight / 2;
+    const dist = 16 * Math.PI;
+    const frac = i / particleCount;
+    const x = (window.innerWidth / 2)  + Math.cos(frac * dist) * frac * maxRadius;
+    const y = (window.innerHeight / 2) + Math.sin(frac * dist) * frac * maxRadius;
+    // particles.push(new Particle(x, y));
+    console.log("passant " + i + ": " + grup[i]);
+    const p = new Particle();
+    i++;
+    if(i==5){i=0;}
+    p.startPos = { x, y };
+    particles.push(p);
+  }
+  
+  // Start event listeners
+  window.addEventListener("deviceorientation", deviceOrientation, true);
+  window.addEventListener("keydown", keyDown, true);
+  window.addEventListener("keyup", keyUp, true);
+  window.addEventListener("resize", updateCanvasSize, true);
+  window.addEventListener("orientationchange", updateCanvasSize, true);
+
+  // Get going!
+  loop();
+})();
+
+// Functions
+function loop() {
+  ctx.fillStyle = "rgba(0, 0, 0, .4)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  for (const particle of particles) {
+    particle.update();
+    particle.draw();
+  }
+
+  idleFrames = Math.min(idleFrames + 1, maxIdleFrames);
+
+  document.getElementById("timer-bar").style.width = `${(idleFrames / maxIdleFrames) * window.innerWidth}px`;
+  window.requestAnimationFrame(loop);
+};
+
+function updateCanvasSize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+function deviceOrientation(e) {
+  if (e.beta || e.gamma) {
+    orientation.supported = true;
+    orientation.beta = e.beta / 180;
+    orientation.gamma = e.gamma / 180;
+  }
+}
+
+function keyDown(e) {
+  if (e.keyCode === 37) keys.left.active = true;
+  if (e.keyCode === 38) keys.up.active = true;
+  if (e.keyCode === 39) keys.right.active = true;
+  if (e.keyCode === 40) keys.down.active = true;
+  
+}
+function keyUp(e) {
+  if (e.keyCode === 37) keys.left.active = false;
+  if (e.keyCode === 38) keys.up.active = false;
+  if (e.keyCode === 39) keys.right.active = false;
+  if (e.keyCode === 40) keys.down.active = false;
+}
+
+function lerp(v0, v1, t) {
+  return (1 - t) * v0 + t * v1;
+}
+
+function clamp(val, min, max) {
+  return Math.max(Math.min(val, max), min);
+}
+
+function toggleMenu() {
+  menuVisible = !menuVisible;
+  document.getElementById("menu").style.display = menuVisible === true
+  ? "block"
+  : "none";
+}
+
+function toggleGfx(e) {
+  eyeCandy = e.target.checked;
+  toggleMenu();
+}
+</script>
+</html>

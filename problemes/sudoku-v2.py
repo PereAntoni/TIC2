@@ -1,6 +1,7 @@
 """
 SUDOKU
 Volem saber si un sudoku està perfectament resolt.
+VERSIÓ 2: COMPROVAM TOT EL SUDOKU
 
 """
 
