@@ -5,6 +5,6 @@ Input consists of a natural number n.
 Output
 Print in order all natural numbers between 0 and n.
 """
-x=int(input())
+x = int(input())
 for y in range(x+1):
     print(y)
