@@ -34,7 +34,7 @@ def amicsDe(a):
 def teLlenguatge(a):
     #petició a l'API de la llista dels llenguatges de a
     #cerca de la llista dels llenguatges
-    #if a=='guillem': return True
+    if a=='guillem': return True
     return False
 
 def cercaLlenguatge(llista,llenguatge,grau):
