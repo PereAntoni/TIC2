@@ -7,25 +7,28 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script></head>
+    <style>
+    </style>
 <style>
+    
+    @import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap');
     img {margin:0px;}
+          @import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap');
+    h1 {
+      font-family: 'Berkshire Swash', cursive;
+      font-size: 100pt;
+      text-align:center;
+      border:1px dotted #000; 
+      padding:8px;
+    }
 </style>   
     
     
 <body class="container-fluid">
+  <h1 >Gimnèsia</h1>
   <div class="jumbotron">
-    <h1>Gimnèsia.net</h1>
-    <div class="row">
-        <div class="input-group mb-3 input-group-lg col-sm-6">
-            <div class="input-group-prepend"><span class="input-group-text">Nom</span></div>
-            <input type="text" class="form-control">
-        </div>    
-        <div class="input-group mb-3 input-group-lg col-sm-6">
-            <div class="input-group-prepend"><span class="input-group-text">email</span></div>
-            <input type="email" class="form-control">
-        </div>
-        
-    </div>
+
+    
     <div class="form-check-inline">
         <label class="form-check-label" for="radio1">
           <input type="radio" class="form-check-input" id="radio1" name="optradio" value="vulgar" checked>Nom vulgar
@@ -52,10 +55,10 @@
   </div>
   <p id="puntuacio"></p>
   <div class="row">
-    <div class="col-sm-6">      
+    <div class="col-6">      
     <img id="img1" class="img-fluid max-width" src="http://aula.gimnesia.net/fotos/100.jpg">
     </div><br>
-    <div class="col-sm-6" id="botons">
+    <div class="col-6" id="botons">
     <button id="boto0" class="btn btn-primary btn-block" onclick="pitjat(0)">Benvingut</button>
     <button id="boto1" class="btn btn-primary btn-block" onclick="pitjat(1)">al joc </button>
     <button id="boto2" class="btn btn-primary btn-block" onclick="pitjat(2)">d'endevinar</button>
