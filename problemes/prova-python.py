@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 cadena = ['Aglà', 'Granot arbori', 'Bolet de fems o de tinta', 'Corb marí', 'Zooplàncton', 'Ferrassa']
 cadena2 = [1,4,5,6,7,3]
