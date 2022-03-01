@@ -13,8 +13,8 @@ Print 2*n − 1 lines, as shown in the examples.
 from easyinput import read
 
 
-long = read(int)
+longitud = read(int)
 b = 0
-for a in range(long):
+for a in range(longitud):
     
     print('*')
