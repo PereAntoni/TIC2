@@ -23,6 +23,7 @@ def cercaMax2(cadena):
     return z
 
 def cercaLletra(cadena,lletra):
+<<<<<<< HEAD
     nombreLletres=0
     lletraCercada=0
     for i in cadena:
@@ -31,6 +32,15 @@ def cercaLletra(cadena,lletra):
                 lletraCercada += 1
             nombreLletres += 1
     print ("El nombre de lletres de la cadena és " + str(nombreLletres) + ", aparicions de la lletra ", lletra, " és ", str(lletraCercada))
+=======
+    nombreLletres = 0
+    for i in cadena:
+        for l in i:
+            if lletra == l:
+                nombreLletres += 1
+    return nombreLletres;
+
+>>>>>>> 674e2b166c1f0d5174ed8bb87266f319fd19e69d
 
 #trobar una cadena
 a = 0
@@ -53,6 +63,11 @@ for i in cadena:
 a = 0
 print(cercaMax2(cadena), "---",cercaMax(cadena2))
 
+<<<<<<< HEAD
 cercaLletra(cadena,'b')
 
+=======
+a='j'
+print("Cercam lletra ", a, ", dins la cadena, ni hi ha : ", cercaLletra(cadena,a))
+>>>>>>> 674e2b166c1f0d5174ed8bb87266f319fd19e69d
 
