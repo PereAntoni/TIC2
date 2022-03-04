@@ -1,16 +1,21 @@
 from easyinput import read
 
 def isBacteri(e,px,py):
-    try: 
-        if ((e[py][px])=='B'): return True 
-    except:
-        return False
-
+    #print("-->adjacent: ", px,py)
+    if px>-1 and py>-1:
+        try: 
+            if ((e[py][px])=='B'): 
+                #print("-hi ha un bacteri a ", px , py)
+                return True 
+        except:
+            return False
+    return False
 
 def adjacents(e,px,py):
     #adjacents ens retorna el nombre de B's
     #adjacents a la posició px,py
     nB = 0
+    #print ("MIRANT ADJACENTS ", px, py)
     if isBacteri(e,px-1,py-1): nB += 1
     if isBacteri(e,px-1,py): nB += 1
     if isBacteri(e,px-1,py+1): nB += 1
@@ -104,25 +109,23 @@ tauler=[
 #tauler=[['a','b','c','d'],['e','f','g','h'],['i','j','k','l']]
 
 
-"""
+
 tauler=[
     ['.','.','.','.','.','.','.','.','.','.'],
     ['.','B','.','.','.','.','.','.','.','.'],
-    ['.','.','B','.','.','.','.','.','.','.'],
-    ['B','B','B','.','.','.','.','.','.','.'],
+    ['.','.','B','.','.','.','B','.','.','.'],
+    ['B','B','B','.','.','.','B','.','.','.'],
+    ['.','.','.','.','.','.','B','.','.','.'],
     ['.','.','.','.','.','.','.','.','.','.'],
     ['.','.','.','.','.','.','.','.','.','.'],
-    ['.','.','.','.','.','.','.','.','.','.'],
-    ['.','.','.','.','.','.','.','.','.','.'],
-    ['.','.','.','.','.','.','.','.','.','.'],
-    ['.','.','.','.','.','.','.','.','.','.']]
-"""
-    
+    ['.','.','.','.','B','.','.','.','.','.'],
+    ['.','.','.','.','B','.','.','.','.','.'],
+    ['.','.','.','.','B','.','.','.','.','.']]
 
 for i in tauler:
     print(i)
 
-for i in range(1):
+for i in range(10):
     print("NOU TAULER")
     tauler = nouTauler(tauler)
     
