@@ -19,18 +19,17 @@ def posicioValida(llista, nou):
     if diagonal(llista, nou): return False
     return True
 
-n = 7
+n = 5
 
-def backGenera(llista):
+def backGenera(llista,p):
+    print(llista,p)
     if len(llista) == (n-1):
         print (llista)
     else:
-        for j in range(n):
+        for j in range(p,n):
             if posicioValida(llista,j):
                 llista.append(j)
-                #print(llista)
-                #print(llista)
-                backGenera(llista)
+                backGenera(llista,j)
     
 def genera():
     print("he entrat a genera")
@@ -38,8 +37,20 @@ def genera():
         #print(str(i))
         llista=[]
         llista.append(i)
-        backGenera(llista)
+        backGenera(llista,0)
     
         
-genera()
-print(posicioValida([1,3,5,0,2],4))
+#genera()
+#print(posicioValida([4,0,3,5,7,1,6],2))
+
+
+def g2():
+    llista =[]
+    for i in range(5):
+        llista.append(i)
+        for j in range(5):
+            llista.append(j)
+        print(llista)
+        llista=[]
+
+g2()
