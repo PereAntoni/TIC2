@@ -1,0 +1,188 @@
+<html>
+<head> 
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+</head> 
+<style>
+    .grid4 {
+  	display: grid;
+	grid-template-columns: repeat(4,50px);
+  	grid-template-rows: repeat(4,50px);
+}
+.grid5 {
+  	display: grid;
+	grid-template-columns: repeat(5,50px);
+  	grid-template-rows: repeat(5,50px);
+}
+.grid6 {
+  	display: grid;
+	grid-template-columns: repeat(6,50px);
+  	grid-template-rows: repeat(6,50px);
+}
+
+.grid7 {
+  	display: grid;
+	grid-template-columns: repeat(7,50px);
+  	grid-template-rows: repeat(7,50px);
+}
+.grid8 {
+  	display: grid;
+	grid-template-columns: repeat(8,50px);
+  	grid-template-rows: repeat(8,50px);
+}
+.grid9 {
+  	display: grid;
+	grid-template-columns: repeat(9,50px);
+  	grid-template-rows: repeat(9,50px);
+}
+.grid10 {
+  	display: grid;
+	grid-template-columns: repeat(10,50px);
+  	grid-template-rows: repeat(10,50px);
+}
+.grid11 {
+  	display: grid;
+	grid-template-columns: repeat(11,50px);
+  	grid-template-rows: repeat(11,50px);
+}
+.grid12 {
+  	display: grid;
+	grid-template-columns: repeat(12,50px);
+  	grid-template-rows: repeat(12,50px);
+}
+.grid13 {
+  	display: grid;
+	grid-template-columns: repeat(13,50px);
+  	grid-template-rows: repeat(13,50px);
+}
+.a 	{ background: white }
+.b 	{ background: black }
+.c	{ background: yellow}
+</style> 
+<body>
+	<input id="nombre">
+	<button onclick="calculaFu()">rkursiva</button>
+	<p id="i" ></p>
+	<div id="aqui"></div>
+</body>
+</html>
+
+<script>
+// Created by Pere Antoni Melisucre 
+
+var m;		  //nombre de cel·les
+var sol=0;	  //nombre de solucions
+
+//FUNCIONS DE TAULER PINTAR
+function creaTauler(mida){
+//Cream una Classe de forma de tauler de la mida, mida.
+	var a = "repeat(" + mida + ", 50px)";
+  	$(".grid2").css("grid-template-columns", a);
+  	$(".grid2").css("grid-template-rows", a);
+}
+
+function pintaTauler(t,s){
+	var mida=t.length;
+	//alert("mida: " + (mida%2));
+	var g= "grid" + mida;
+  	var caselles="<div id='io' class='" + g + "'>";
+  	var c="blanc";
+  	var c1="blanc";
+  	for (b=0;b<mida;b++){
+  		for (d=0;d<mida;d++){
+			if (c=="blanc"){
+				if (t[b]==d)
+						{caselles +="<div class='c'>Queen</div>";}else
+						{caselles +="<div class='a'></div>";}
+					c="negre";}
+				else{
+				if (t[b]==d)
+						{caselles +="<div class='c'>Queen</div>";}else
+						{caselles +="<div class='b'></div>";}
+					c="blanc";}
+  		}
+		
+		if ((mida%2)==0){//alert("hi");
+			if (c1=="blanc"){c1="negre";c="negre";}
+			else			{c1="blanc";c="blanc";}
+			}
+  	}
+	sol++;
+ document.getElementById("aqui").innerHTML+="Solució Cadena: " + s + "<br>";
+   document.getElementById("aqui").innerHTML+=(caselles);
+  //$("#aqui").append("Solució Cadena: " + s + "<br>");
+  //$("#aqui").append(caselles);
+  
+}
+
+
+
+//PROGRAMA DE CÀLCUL
+function inicialitzaCadena(c,l){
+	for(a=c;a<m;a++){l[a]=-1;}}
+
+function fu(c,f,l){
+ 	if (c < m) {
+		inicialitzaCadena(c,l);
+		for(f=0;f<m;f++){
+			if (control(c,f,l)){
+				l=inserta(c,f,l);
+				fu(c+1,0,l);}
+				}
+				//else		{if(f<(m-1)){fu(c,f+1,l);}
+	}		
+ 	else {
+			//escriuF("(" + l.toString() + ")");
+			pintaTauler(l,"(" + l.toString() + ")");}
+} 
+ 
+ function inserta(c,f,l){l[c]=f;escriu("----------------------------------->Insertada Cadena: " + l.toString());return l;}
+ function escriu(e) {
+ //document.getElementById("i").innerHTML += "<br>" + e;
+ }
+ function escriuS(e) {document.getElementById("i").innerHTML += e;}
+ 
+ function escriuF(e) {s ++; document.getElementById("i").innerHTML += "<br>Solució " + s + ": "  + e;}
+ function posa(e) {document.getElementById("i").innerHTML += e;}
+
+	function dibuixaSolucio(l){
+		posa("<br>");
+		for (a=0;a<m;a++){
+			for (b=0;b<m;b++){
+				if (l[b]==a){posa(" R ");}else{posa(" * ");}
+			}
+			posa("<br>");
+		}
+		posa("<br>");
+	}
+	
+function control(c,filaP,tauler){
+var sf,rf,fo,puj=false;
+escriu ("Controlant cadena:" + tauler.toString() + ", enviat c: " + c + ", FilaP: " + filaP );
+
+	for (var a=c-1;a>=0;a--){
+		escriu("- Per a=" + a + ". Valor de +: " + (tauler[a]+a) + " contra " + (c+filaP));
+		escriu("- Per a=" + a + ". Valor de -: " + (tauler[a]-a) + " contra " + (c-filaP));
+		if ((tauler[a]+a)==(c+filaP))	{sf=true;	escriu("Fallat per Diagonal Suma.");}
+		//if ((tauler[a]-a)==(c-filaP))	{rf=true;	escriu("Fallat per Diagonal Resta.");}
+		if ((a-tauler[a])==(c - filaP))	{rf=true;	escriu("Fallat per Diagonal Resta2.");}
+		if (filaP==tauler[a])					{fo=true;	escriu("Fallat per Fila Igual.");}
+		if (filaP>m)							{puj=true;	escriu("Fallat per Nombre fora de rang.");}
+		if (fo||rf||sf||puj)					{a=0;return false;}
+	}
+	return true;	//vol dir que pot posar a la posició indicada i per tant pot calcular la pròxima columna.
+}
+
+function calculaFu(){
+    m=document.getElementById("nombre").value;
+
+    creaTauler(m);
+    $("#aqui").empty();
+    sol=0;
+    document.getElementById("aqui").innerHTML = "";
+    fu(0,0,[]);
+    //$("#aqui").prepend("Tauler de mida: "+ m +", amb nombre de solucions: " + sol +"<br>");
+document.getElementById("i").innerHTML = "Mida Tauler " + m + ". Solucions: " + sol;
+}
+
+//calculaFu();
+</script>

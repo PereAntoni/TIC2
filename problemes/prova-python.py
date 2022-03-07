@@ -45,6 +45,7 @@ for i in cadena:
     if i == nom:
         print(a)
     a +=1
+print(a)
 
 #trobar una cadena
 a = 5

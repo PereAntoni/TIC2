@@ -1,0 +1,56 @@
+
+1. Fes la taula d'execució (valors i,a,nom) i indica que imprimirà el següent troç de programa. 
+
+    a = 0
+    for i in cadena:
+        print("bon dia")
+
+2. Fes la taula d'execució (valors i,a,nom) i indica que imprimirà el següent troç de programa. 
+
+    a = 0
+    for i in cadena:
+        if i == nom:
+            print(a)
+        a +=1
+    print(a)
+
+
+3. Fes la taula d'execució  i indica que imprimirà el següent troç de programa: 
+
+    def cercaMax(cadena):
+        max=0
+        for i in cadena:
+            if max < i:
+                max = i
+        return max
+
+    cercaMax(cadena2)
+
+4.  Fes la taula d'execució i indica que imprimirà el següent troç de programa:
+
+    def cercaLletra(cadena,lletra):
+        nombreLletres=0
+        lletraCercada=0
+        for i in cadena:
+            for j in i:
+                if j == lletra:
+                    lletraCercada += 1
+                nombreLletres += 1
+        print(lletraCercadam, "de", nombreLletres)
+
+    cercaLletra(cadena,'a')
+
+5. Fes la taula d'execució i indica que imprimirà el següent troç de programa:
+
+    def cercaMax2(cadena):
+        m = cadena[0]
+        p = 0
+        z = 0
+        for i in cadena:
+            if m < i:
+                m = i
+                z = p
+            p += 1        
+        return z
+
+    print(cercaMax2(cadena))

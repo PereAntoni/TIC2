@@ -4,7 +4,23 @@ start
     :llegir A;
     :llegir B;
     if (A major que B) then (yes)
-        :proces;
+
+    else (no)
+        :X=A;
+        :A=E;
+        :B=X;
+    endif
+    :print(A,B);
+stop
+@enduml
+
+@startuml
+!theme toy
+start
+    :llegir A;
+    :llegir B;
+    if (A major que B) then (yes)
+
     else (no)
         :X=A;
         :A=E;

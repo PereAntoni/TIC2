@@ -4,6 +4,12 @@ import requests
 import json
 import random
 import operator
+import pickle
+
+def guarda(dict):
+    with open("myDictionary.pkl", "wb") as tf:
+        pickle.dump(dict,tf)
+
 
 #clients_sort = sorted(clients.items(), key=operator.itemgetter(1), reverse=True)
 #cream el diccionari a partir del consum de l'api de gimnesia
@@ -19,7 +25,6 @@ def getRandom():
     especie=person_dict['records'][random.randint(0, 92)]
     return especie["nom"]
 
-
 def llistatTots():
     for i in person_dict['records']:
         print (i["codi"], ":",i["nom"])
@@ -28,11 +33,24 @@ def llistatTots():
 
 
 
-for i in range(25):
+for i in range(1,30):
     llista=[]
-    for j in range(7):
-        llista.append(getRandom())
-    print(llista)
+    for j in range(10):
+        #comprovam qe no tengui duplicats:
+        ficat = False
+        while not ficat:
+            nou = getRandom()
+            if nou not in llista:
+                ficat = True
+                llista.append(getRandom())
+    print()
+    print(str(i), ":")
+    print("cadena =", llista)
+    print("nom ='" + llista[5] + "'")
+    print("cadena2 = [3,5,6,3,2,7,5,9,1]")
+    print()
+#guarda(person_dict)
 
-llistatTots()
+
+#llistatTots()
 
