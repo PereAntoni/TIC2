@@ -30,13 +30,18 @@ def sortBubble(matriu):
     return matriu
 
 def sortInsertion(matriu):
+    #de 1 fins al final
     for i in range(1,len(matriu)):
         if matriu[i]<matriu[i-1]:
-            for j in range(i,0,-1):
-                if matriu[j] < matriu [i]:
-                    print("fent canvi")
-                    matriu.insert(j+1,matriu.pop(i))
-                    break
+            #print (i,":",matriu[i],"<",matriu[i-1])
+            valorCanvi = matriu.pop(i)
+            for j in range(i-1,0,-1):
+                #print("comparant",j,":",matriu[i],matriu[j]," / ",end="")
+                if valorCanvi < matriu [j]:
+                    treu = matriu.pop(j)
+                    matriu.insert(j+1,valorCanvi)
+                    print("---->",matriu)
+                else: break
     return matriu
 
 m = [4,3,2,6,5,4,5,3,12,3,45,0,7,6,5,4,6]
