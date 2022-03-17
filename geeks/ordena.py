@@ -51,5 +51,5 @@ print("selecion Sort:",selecionSort(m))
 m = [4,3,2,6,5,4,5,3,12,3,45,0,7,6,5,4,6]
 print("bubble   sort:",sortBubble(m))
 
-m = [4,3,2,6,5,4,5,3,12,3,45,0,7,6,5,4,6]
+m = [4,3,2]
 print("insertion   sort:",sortInsertion(m))
