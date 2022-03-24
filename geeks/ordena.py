@@ -33,15 +33,13 @@ def sortInsertion(matriu):
     #de 1 fins al final
     for i in range(1,len(matriu)):
         if matriu[i]<matriu[i-1]:
-            #print (i,":",matriu[i],"<",matriu[i-1])
-            valorCanvi = matriu.pop(i)
-            for j in range(i-1,0,-1):
-                #print("comparant",j,":",matriu[i],matriu[j]," / ",end="")
-                if valorCanvi < matriu [j]:
-                    treu = matriu.pop(j)
-                    matriu.insert(j+1,valorCanvi)
-                    print("---->",matriu)
-                else: break
+            print (i,":",matriu[i],"<",matriu[i-1])
+            #valorCanvi = matriu.pop(i)
+            for j in range(i-1,-1,-1):
+                print("comparant",j,":",matriu[i],matriu[j]," / ",end="")
+                
+                if (matriu[i] > matriu [j]) or j==0:
+                    matriu.insert(j+1,matriu.pop(j))
     return matriu
 
 m = [4,3,2,6,5,4,5,3,12,3,45,0,7,6,5,4,6]
@@ -51,5 +49,5 @@ print("selecion Sort:",selecionSort(m))
 m = [4,3,2,6,5,4,5,3,12,3,45,0,7,6,5,4,6]
 print("bubble   sort:",sortBubble(m))
 
-m = [4,3,2]
+m = [4,3,2,1]
 print("insertion   sort:",sortInsertion(m))
