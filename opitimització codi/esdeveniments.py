@@ -50,7 +50,7 @@ class Ball:
         if self.position_y > SCREEN_HEIGHT - self.radius:
             self.change_y *= -1
 
-class Colisionador():
+class Colisionador:
     def _init__():
         pass
 
@@ -62,7 +62,23 @@ class Colisionador():
         else:
             return False
 
-        
+
+
+class snowPerson:
+    def _init__(self,x,y):
+    # Draw a snow person
+        self.px=x
+        self.py=y
+
+    def draw(self):
+    # Snow
+        arcade.draw_circle_filled(300, 200, 60, arcade.color.WHITE)
+        arcade.draw_circle_filled(300, 280, 50, arcade.color.WHITE)
+        arcade.draw_circle_filled(300, 340, 40, arcade.color.WHITE)
+
+        # Eyes
+        arcade.draw_circle_filled(285, 350, 5, arcade.color.BLACK)
+        arcade.draw_circle_filled(315, 350, 5, arcade.color.BLACK)        
 
 class MyGame(arcade.Window):
 
@@ -74,9 +90,10 @@ class MyGame(arcade.Window):
         # Set the background color
         arcade.set_background_color(arcade.color.ASH_GREY)
 
-                # Attributes to store where our ball is
-        self.ball = Ball(50, 50, 3, 3, 20, arcade.color.AUBURN)
-        self.ball2 = Ball(50, 50, 12, 13, 20, arcade.color.AUBURN)
+        self.llista = []
+        # Attributes to store where our ball is
+        self.llista.append(Ball(50, 50, 3, 3, 20, arcade.color.AUBURN))
+        self.llista.append(Ball(150, 50, 12, 13, 20, arcade.color.AUBURN))
         self.colisionar = Colisionador()
 
 
@@ -84,18 +101,16 @@ class MyGame(arcade.Window):
     def on_draw(self):
         """ Called whenever we need to draw the window. """
         arcade.start_render()
-        self.ball.draw()
-        self.ball2.draw()
+        for i in range(len(self.llista)):
+            #print("som dins llista")
+            self.llista[i].draw()
+        
+
 
     def update(self, delta_time):
         """ Called to update our objects. Happens approximately 60 times per second."""
-        self.ball.update()
-        self.ball2.update()
-        if self.colisionar.colisio(self.ball,self.ball2):
-            self.ball.change_x *= -1
-            self.ball.change_y *= -1
-            
-            self.ball.canvia()
+        for i in range(len(self.llista)):
+            self.llista[i].update()
 
 def main():
     window = MyGame(640, 480, "Drawing Example")
