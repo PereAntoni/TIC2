@@ -5,6 +5,8 @@ import math
 SCREEN_WIDTH = 640
 SCREEN_HEIGHT = 480
 
+
+
 class Ball:
     """ This class manages a ball bouncing on the screen. """
 
@@ -91,7 +93,13 @@ class MyGame(arcade.Window):
         arcade.set_background_color(arcade.color.ASH_GREY)
 
         self.llista = []
+        self.player_list = []
         # Attributes to store where our ball is
+        self.rupit = arcade.Sprite(":resources:images/items/coinGold.png",1)
+        self.rupit.center_x = 64
+        self.rupit.center_Y = 120
+        self.player_list.append(self.rupit)
+
         self.llista.append(Ball(50, 50, 3, 3, 20, arcade.color.AUBURN))
         self.llista.append(Ball(150, 50, 12, 13, 20, arcade.color.AUBURN))
         self.colisionar = Colisionador()
@@ -101,6 +109,7 @@ class MyGame(arcade.Window):
     def on_draw(self):
         """ Called whenever we need to draw the window. """
         arcade.start_render()
+        self.player_list.draw()
         for i in range(len(self.llista)):
             #print("som dins llista")
             self.llista[i].draw()
