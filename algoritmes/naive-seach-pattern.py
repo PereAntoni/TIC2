@@ -18,6 +18,18 @@ Output: Pattern found at index 0
         Pattern found at index 12
 """
 
+def computeLPS(pat,lpat,lps):
+    pass
+
+def cerca_KMP(txt,pat):
+    lpat = len(pat)
+    ltxt = len(txt)
+    lps = [0]*lpat  
+    j = 0           #index del path
+    #preprocessam el 
+    computeLPS(pat,lpat,lps)
+
+
 def cerca_patro(txt,pat):
     lpat = len(pat)
     ltxt = len(txt)
@@ -50,6 +62,7 @@ pat = "AAAA"
 print(txt)
 print(pat)
 cerca_patro(txt,pat)
+
 
 
 
