@@ -1,5 +1,6 @@
 #El programa ha de llegir una paraula d'un llistat de paraules
-#aquest es un canvib     
+#aquest es un canvi
+#dijdjidijd 
 
 import requests
 import json
