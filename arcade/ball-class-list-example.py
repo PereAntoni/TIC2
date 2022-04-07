@@ -3,7 +3,6 @@ import arcade
 SCREEN_WIDTH = 640
 SCREEN_HEIGHT = 480
 
-
 class Ball:
     """ This class manages a ball bouncing on the screen. """
 
@@ -42,6 +41,14 @@ class Ball:
         if self.position_y > SCREEN_HEIGHT - self.radius:
             self.change_y *= -1
 
+class Pere(Ball):
+
+    def __init__(self, position_x, position_y, change_x, change_y, radius, color):
+        super().__init__(position_x, position_y, change_x, change_y, radius, color)
+
+    
+
+
 
 class MyGame(arcade.Window):
 
@@ -51,18 +58,12 @@ class MyGame(arcade.Window):
         super().__init__(width, height, title)
         arcade.set_background_color(arcade.color.ASH_GREY)
 
+        self.pere = Pere(50, 50, 3, 3, 15, arcade.color.AUBURN)
+          
         # Create a list for the balls
         self.ball_list = []
+        
 
-        # Add three balls to the list
-        ball = Ball(50, 50, 3, 3, 15, arcade.color.AUBURN)
-        self.ball_list.append(ball)
-
-        ball = Ball(100, 150, 2, 3, 15, arcade.color.PURPLE_MOUNTAIN_MAJESTY)
-        self.ball_list.append(ball)
-
-        ball = Ball(150, 250, -3, -1, 15, arcade.color.FOREST_GREEN)
-        self.ball_list.append(ball)
 
     def on_draw(self):
         """ Called whenever we need to draw the window. """
@@ -70,6 +71,7 @@ class MyGame(arcade.Window):
 
         # Use a "for" loop to pull each ball from the list, then call the draw
         # method on that ball.
+        self.pere.draw()
         for ball in self.ball_list:
             ball.draw()
 
@@ -78,8 +80,23 @@ class MyGame(arcade.Window):
 
         # Use a "for" loop to pull each ball from the list, then call the update
         # method on that ball.
+
         for ball in self.ball_list:
             ball.update()
+
+    def on_key_press(self, key, modifiers):
+        """Called whenever a key is pressed."""
+
+        if key == arcade.key.UP or key == arcade.key.W:
+            self.pere.position_y += 10
+        elif key == arcade.key.DOWN or key == arcade.key.S:
+            self.pere.position_y -= 10
+        elif key == arcade.key.LEFT or key == arcade.key.A:
+            self.pere.position_x -= 10
+        elif key == arcade.key.RIGHT or key == arcade.key.D:
+            self.pere.position_x += 10  
+                 
+
 
 
 def main():
