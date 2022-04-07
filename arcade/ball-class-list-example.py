@@ -2,6 +2,7 @@ import arcade
 
 SCREEN_WIDTH = 640
 SCREEN_HEIGHT = 480
+VELOCITAT = 3
 
 class Ball:
     """ This class manages a ball bouncing on the screen. """
@@ -45,7 +46,27 @@ class Pere(Ball):
 
     def __init__(self, position_x, position_y, change_x, change_y, radius, color):
         super().__init__(position_x, position_y, change_x, change_y, radius, color)
+        self.key=''
+    
+    def update(self):
+        """ Code to control the ball's movement. """
 
+        # Move the ball
+        self.position_y += self.change_y
+        self.position_x += self.change_x
+
+        # See if the ball hit the edge of the screen. If so, change direction
+        if self.position_x < self.radius:
+            self.change_x = 0
+
+        if self.position_x > SCREEN_WIDTH - self.radius:
+            self.change_x = 0
+
+        if self.position_y < self.radius:
+            self.change_y = 0
+
+        if self.position_y > SCREEN_HEIGHT - self.radius:
+            self.change_y = 0
     
 
 
@@ -58,7 +79,7 @@ class MyGame(arcade.Window):
         super().__init__(width, height, title)
         arcade.set_background_color(arcade.color.ASH_GREY)
 
-        self.pere = Pere(50, 50, 3, 3, 15, arcade.color.AUBURN)
+        self.pere = Pere(50, 50, 0, 0, 15, arcade.color.AUBURN)
           
         # Create a list for the balls
         self.ball_list = []
@@ -80,22 +101,31 @@ class MyGame(arcade.Window):
 
         # Use a "for" loop to pull each ball from the list, then call the update
         # method on that ball.
-
+        self.pere.update()
         for ball in self.ball_list:
             ball.update()
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed."""
-
+        self.key = key
+        #print("agafant", self.pere.key)
         if key == arcade.key.UP or key == arcade.key.W:
-            self.pere.position_y += 10
+            self.pere.change_y = VELOCITAT
         elif key == arcade.key.DOWN or key == arcade.key.S:
-            self.pere.position_y -= 10
+            self.pere.change_y=-VELOCITAT
         elif key == arcade.key.LEFT or key == arcade.key.A:
-            self.pere.position_x -= 10
+            self.pere.change_x = -VELOCITAT
         elif key == arcade.key.RIGHT or key == arcade.key.D:
-            self.pere.position_x += 10  
-                 
+            self.pere.change_x = VELOCITAT
+
+    def on_key_release(self, symbol: int, modifiers: int):
+        #print("amollant ", self.pere.key)
+        self.pere.key=''
+        self.pere.change_x=0
+        self.pere.change_y=0
+        return super().on_key_release(symbol, modifiers)
+
+
 
 
 
