@@ -25,10 +25,49 @@ def cerca_KMP(txt,pat):
     lpat = len(pat)
     ltxt = len(txt)
     lps = [0]*lpat  
-    j = 0           #index del path
+    #index del path
+    j = 0          
     #preprocessam el 
     computeLPS(pat,lpat,lps)
 
+    i=0
+    while i < ltxt:
+        if pat[j] == txt[i]:
+            i += 1
+            j += 1
+        if j== lpat:
+            print ("trobat un patro a " + str(i-j))
+            j = lps[j-1]
+
+        # mismatch after j matches
+        elif i < ltxt and pat[j] != txt[i]:
+            # Do not match lps[0..lps[j-1]] characters,
+            # they will match anyway
+            if j != 0:
+                j = lps[j-1]
+            else:
+                i += 1
+
+def computeLPS(pat,lpat,lps):
+    #ens donen una array buida de longitud del patro cercat
+    len = 0 # longitud del més llarg prefix
+
+    lps[0]  #sempre serà zero
+    i = 1
+    while i < lpat:
+        if pat[i]==pat[len]:
+            len += 1
+            lps[i] = len
+            i += 1
+        else:
+            if len !=0:
+                len=lps[len-1]
+            else:
+                lps[i] = 0
+                i += 1
+        #el bucle calcula lps[i] per i=1 fins 
+        print(i,":",lps)
+    pass   
 
 def cerca_patro(txt,pat):
     lpat = len(pat)
@@ -43,7 +82,7 @@ def cerca_patro(txt,pat):
             trobat +=1
         if trobat == lpat:
             print("s'ha trobat el patró a la posició: ",i)
-
+"""
 txt = "THIS IS A TEST TEXT"
 pat = "TEST"
 print(txt)
@@ -55,13 +94,13 @@ pat =  "AABA"
 print(txt)
 print(pat)
 cerca_patro(txt,pat)
-
+"""
 print("Mostra cas especial")
-txt = "AAAAABAAABA" 
-pat = "AAAA"
+txt = "AAAAABAAAB" 
+pat = "ABCDABC"
 print(txt)
 print(pat)
-cerca_patro(txt,pat)
+cerca_KMP(txt,pat)
 
 
 
