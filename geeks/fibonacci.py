@@ -5,4 +5,4 @@ def fibonacci(n):
         print(f[i])
     return f[n]
 
-print(fibonacci(5))
+print(fibonacci(35))
