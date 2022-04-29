@@ -1,0 +1,20 @@
+@startuml
+Bolla <|-- Floc
+Bolla <|-- Persona
+Bolla <|-- Bombilla
+
+Bolla : posicioX, int
+Bolla : posicioY, int
+Bolla : setx()
+Bolla : setY()
+Bolla : draw()
+Bolla : update()
+
+Bombilla : encen()
+Bombilla : apaga()
+
+Llista *-- Bolla
+
+Llista : append() 
+
+@enduml

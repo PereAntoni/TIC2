@@ -149,7 +149,7 @@ class MyGame(arcade.Window):
         self.pere.key_release(symbol,modifiers)
         return super().on_key_release(symbol, modifiers)
 
-
+    
 
 
 
